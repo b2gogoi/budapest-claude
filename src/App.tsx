@@ -3,6 +3,7 @@ import { PlanStateProvider } from './state/PlanStateProvider';
 import { useHashRoute } from './hooks/useHashRoute';
 import { Sidebar } from './components/layout/Sidebar';
 import { DashboardPage } from './pages/DashboardPage';
+import { WorkoutsPage } from './pages/WorkoutsPage';
 import { ConfigurePage } from './pages/ConfigurePage';
 
 function AppShell() {
@@ -12,7 +13,13 @@ function AppShell() {
       <Sidebar route={route} onNavigate={navigate} />
       <div className="relative z-10 min-w-0 flex-1">
         <main className="mx-auto max-w-[1200px] px-6 pb-20 pt-10">
-          {route === 'configure' ? <ConfigurePage /> : <DashboardPage />}
+          {route === 'configure' ? (
+            <ConfigurePage />
+          ) : route === 'workouts' ? (
+            <WorkoutsPage />
+          ) : (
+            <DashboardPage />
+          )}
         </main>
       </div>
     </div>

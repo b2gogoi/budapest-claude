@@ -24,6 +24,15 @@ const NAV_ITEMS: NavItem[] = [
     ),
   },
   {
+    id: 'workouts',
+    label: 'Workouts',
+    icon: (
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M6.5 6.5v11M17.5 6.5v11M3 9v6M21 9v6M6.5 12h11" />
+      </svg>
+    ),
+  },
+  {
     id: 'configure',
     label: 'Configure',
     icon: (
