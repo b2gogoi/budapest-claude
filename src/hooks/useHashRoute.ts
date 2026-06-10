@@ -1,12 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
 
-export type Route = 'dashboard' | 'configure';
+export type Route = 'dashboard' | 'workouts' | 'configure';
 
 function parseHash(): Route {
-  return window.location.hash.replace(/^#\/?/, '') === 'configure' ? 'configure' : 'dashboard';
+  const path = window.location.hash.replace(/^#\/?/, '');
+  if (path === 'configure') return 'configure';
+  if (path === 'workouts') return 'workouts';
+  return 'dashboard';
 }
 
-/** Minimal hash-based router — '#/' = dashboard, '#/configure' = configure. */
+/** Minimal hash-based router — '#/' = dashboard, '#/workouts', '#/configure'. */
 export function useHashRoute() {
   const [route, setRoute] = useState<Route>(parseHash);
 
@@ -17,7 +20,7 @@ export function useHashRoute() {
   }, []);
 
   const navigate = useCallback((next: Route) => {
-    window.location.hash = next === 'configure' ? '/configure' : '/';
+    window.location.hash = next === 'dashboard' ? '/' : `/${next}`;
   }, []);
 
   return { route, navigate };
