@@ -1,0 +1,74 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ---------------------------------------------------------------------------
+ * Design tokens — single source of truth for both themes.
+ * All values are space-separated RGB triplets so Tailwind opacity modifiers
+ * (e.g. bg-accent-gold/10) work against them.
+ * ------------------------------------------------------------------------- */
+:root {
+  /* Light theme */
+  --c-bg: 243 245 249;
+  --c-surface: 255 255 255;
+  --c-surface2: 241 245 249;
+  --c-line: 226 232 240;
+  --c-line2: 203 213 225;
+  --c-ink: 15 23 42;
+  --c-muted: 71 85 105;
+  --c-faint: 100 116 139;
+
+  --a-gold: 161 98 7;
+  --a-cyan: 8 145 178;
+  --a-violet: 124 58 237;
+  --a-rose: 225 29 72;
+  --a-emerald: 5 150 105;
+  --a-slate: 100 116 139;
+
+  --grid-line: 8 145 178;
+}
+
+.dark {
+  /* Dark theme (original design) */
+  --c-bg: 8 11 20;
+  --c-surface: 17 24 39;
+  --c-surface2: 26 34 53;
+  --c-line: 30 45 69;
+  --c-line2: 37 53 80;
+  --c-ink: 241 245 249;
+  --c-muted: 148 163 184;
+  --c-faint: 100 116 139;
+
+  --a-gold: 240 180 41;
+  --a-cyan: 34 211 238;
+  --a-violet: 139 92 246;
+  --a-rose: 244 63 94;
+  --a-emerald: 16 185 129;
+  --a-slate: 148 163 184;
+
+  --grid-line: 34 211 238;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+body {
+  @apply bg-base font-sans text-sm leading-relaxed text-ink antialiased;
+  overflow-x: hidden;
+}
+
+/* Decorative fixed backdrop: blueprint grid + ambient glows */
+.backdrop-grid {
+  background-image:
+    linear-gradient(rgb(var(--grid-line) / 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(var(--grid-line) / 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+.backdrop-glow {
+  background:
+    radial-gradient(ellipse 80% 60% at 20% 10%, rgb(var(--a-violet) / 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse 60% 50% at 80% 80%, rgb(var(--a-cyan) / 0.06) 0%, transparent 60%);
+}
