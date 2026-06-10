@@ -16,7 +16,7 @@ export const phase1: Phase = {
     {
       id: 'w1',
       num: 'W1',
-      dates: '7–12 Jul',
+      startDate: '2026-07-07',
       title: 'Movement Reset · SA Intro · 100 Fly Season Zero Baseline',
       accent: 'cyan',
       badges: ['~4000m pool', '3 gym'],
@@ -188,7 +188,7 @@ export const phase1: Phase = {
     {
       id: 'w2',
       num: 'W2',
-      dates: '14–19 Jul',
+      startDate: '2026-07-14',
       title: 'Load Progression · Broken 100 Build · Box Jump Intro',
       accent: 'cyan',
       badges: ['~4200m pool', '3 gym'],
@@ -359,7 +359,7 @@ export const phase1: Phase = {
     {
       id: 'w3',
       num: 'W3',
-      dates: '21–26 Jul',
+      startDate: '2026-07-21',
       title: 'Intensity Step · Race-Pace 50s · Barbell Introduced',
       accent: 'cyan',
       badges: ['~4500m pool', '3 gym'],
@@ -527,7 +527,7 @@ export const phase1: Phase = {
     {
       id: 'w4',
       num: 'W4',
-      dates: '28 Jul – 2 Aug',
+      startDate: '2026-07-28',
       title: 'Deload · Consolidate · Let Adaptation Land',
       accent: 'slate',
       badges: ['~2800m pool', '3 gym reduced'],

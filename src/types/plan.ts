@@ -45,7 +45,10 @@ export interface WeekNote {
 export interface Week {
   id: string;
   num: string;
-  dates: string;
+  /** ISO date (yyyy-mm-dd) of the week's first day — editable in Configure. */
+  startDate: string;
+  /** Days the week spans for the displayed date range (default 6, Mon–Sat). */
+  spanDays?: number;
   title: string;
   accent: AccentColor;
   badges: string[];

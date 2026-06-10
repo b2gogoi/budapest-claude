@@ -5,4 +5,5 @@ export const STORAGE_KEYS = {
   expandedWeeks: 'bb:expanded-weeks',
   completedSessions: 'bb:completed-sessions',
   trackerTimes: 'bb:tracker-times',
+  sidebarCollapsed: 'bb:sidebar-collapsed',
 } as const;

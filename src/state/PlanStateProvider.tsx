@@ -1,7 +1,10 @@
-import { createContext, useContext, useMemo, type ReactNode } from 'react';
+import { createContext, useCallback, useContext, useMemo, useState, type ReactNode } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 import { STORAGE_KEYS } from '../config/storage';
 import type { TrainingPlan, Week } from '../types/plan';
+import { loadPlan } from '../data/loadPlan';
+import { defaultPlan } from '../data/plan';
+import { addDays, diffDays } from '../utils/dates';
 
 export interface PlanState {
   plan: TrainingPlan;
@@ -14,6 +17,10 @@ export interface PlanState {
   /** Tracker meet times, keyed by meet id. */
   trackerTimes: Record<string, string>;
   setTrackerTime: (meetId: string, time: string) => void;
+  /** Move a week; when cascade is true, all later weeks shift by the same delta. */
+  setWeekStartDate: (weekId: string, startDate: string, cascade: boolean) => void;
+  /** Restore the bundled default plan (user progress is kept). */
+  resetPlan: () => void;
 }
 
 const PlanStateContext = createContext<PlanState | null>(null);
@@ -22,12 +29,8 @@ export function sessionKey(weekId: string, dayLabel: string, sessionLabel: strin
   return `${weekId}:${dayLabel}:${sessionLabel}`;
 }
 
-interface Props {
-  plan: TrainingPlan;
-  children: ReactNode;
-}
-
-export function PlanStateProvider({ plan, children }: Props) {
+export function PlanStateProvider({ children }: { children: ReactNode }) {
+  const [plan, setPlan] = useState<TrainingPlan>(loadPlan);
   const [expanded, setExpanded] = useLocalStorage<Record<string, boolean>>(
     STORAGE_KEYS.expandedWeeks,
     {},
@@ -40,6 +43,51 @@ export function PlanStateProvider({ plan, children }: Props) {
     STORAGE_KEYS.trackerTimes,
     {},
   );
+
+  const persistPlan = useCallback((next: TrainingPlan) => {
+    try {
+      window.localStorage.setItem(STORAGE_KEYS.plan, JSON.stringify(next));
+    } catch {
+      // storage unavailable — keep in memory
+    }
+    setPlan(next);
+  }, []);
+
+  const setWeekStartDate = useCallback(
+    (weekId: string, startDate: string, cascade: boolean) => {
+      setPlan((prev) => {
+        const ordered = prev.phases.flatMap((p) => p.weeks);
+        const index = ordered.findIndex((w) => w.id === weekId);
+        if (index < 0 || !startDate) return prev;
+        const delta = diffDays(ordered[index].startDate, startDate);
+        if (delta === 0) return prev;
+
+        const next: TrainingPlan = {
+          ...prev,
+          phases: prev.phases.map((phase) => ({
+            ...phase,
+            weeks: phase.weeks.map((week) => {
+              if (week.id === weekId) return { ...week, startDate };
+              const weekIndex = ordered.findIndex((w) => w.id === week.id);
+              if (cascade && weekIndex > index) {
+                return { ...week, startDate: addDays(week.startDate, delta) };
+              }
+              return week;
+            }),
+          })),
+        };
+        try {
+          window.localStorage.setItem(STORAGE_KEYS.plan, JSON.stringify(next));
+        } catch {
+          // storage unavailable — keep in memory
+        }
+        return next;
+      });
+    },
+    [],
+  );
+
+  const resetPlan = useCallback(() => persistPlan(defaultPlan), [persistPlan]);
 
   const value = useMemo<PlanState>(
     () => ({
@@ -57,8 +105,20 @@ export function PlanStateProvider({ plan, children }: Props) {
       trackerTimes,
       setTrackerTime: (meetId, time) =>
         setTrackerTimes((prev) => ({ ...prev, [meetId]: time })),
+      setWeekStartDate,
+      resetPlan,
     }),
-    [plan, expanded, completed, trackerTimes, setExpanded, setCompleted, setTrackerTimes],
+    [
+      plan,
+      expanded,
+      completed,
+      trackerTimes,
+      setExpanded,
+      setCompleted,
+      setTrackerTimes,
+      setWeekStartDate,
+      resetPlan,
+    ],
   );
 
   return <PlanStateContext.Provider value={value}>{children}</PlanStateContext.Provider>;

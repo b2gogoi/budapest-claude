@@ -16,7 +16,7 @@ export const phase4: Phase = {
     {
       id: 't1',
       num: 'T1',
-      dates: '22–27 Sep',
+      startDate: '2026-09-22',
       title: 'Taper Week · 3 Pool · 1 Gym · Rest Is Training Now',
       accent: 'rose',
       badges: ['~1800m pool', '1 gym only'],
@@ -137,7 +137,8 @@ export const phase4: Phase = {
     {
       id: 't2',
       num: 'T2',
-      dates: '29 Sep – 3 Oct',
+      startDate: '2026-09-29',
+      spanDays: 5,
       title: 'Race Week · Asian Masters Opens 3 Oct',
       accent: 'rose',
       badges: ['~500m pool', 'No gym'],

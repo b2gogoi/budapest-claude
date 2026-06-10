@@ -16,7 +16,7 @@ export const phase3: Phase = {
     {
       id: 'w9',
       num: 'W9',
-      dates: '1–6 Sep',
+      startDate: '2026-09-01',
       title: 'Sprint Specificity · Max 25s · 100 Fly Race Effort',
       accent: 'violet',
       badges: ['~3500m pool', '3 gym power'],
@@ -182,7 +182,7 @@ export const phase3: Phase = {
     {
       id: 'w10',
       num: 'W10',
-      dates: '8–13 Sep',
+      startDate: '2026-09-08',
       title: 'Race Sharpening · Full Dress Rehearsal Thursday',
       accent: 'violet',
       badges: ['~3200m pool', '3 gym activation'],
@@ -349,7 +349,7 @@ export const phase3: Phase = {
     {
       id: 'w11',
       num: 'W11',
-      dates: '15–20 Sep',
+      startDate: '2026-09-15',
       title: 'Final Quality Week · Lock Mechanics · Taper Begins Friday',
       accent: 'violet',
       badges: ['~2700m pool', '2 gym only'],
