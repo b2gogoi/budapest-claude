@@ -9,6 +9,7 @@
  * ------------------------------------------------------------------------- */
 :root {
   /* Light theme */
+  color-scheme: light;
   --c-bg: 243 245 249;
   --c-surface: 255 255 255;
   --c-surface2: 241 245 249;
@@ -30,6 +31,7 @@
 
 .dark {
   /* Dark theme (original design) */
+  color-scheme: dark;
   --c-bg: 8 11 20;
   --c-surface: 17 24 39;
   --c-surface2: 26 34 53;

@@ -11,7 +11,7 @@ import { phase4 } from './phases/phase4';
 /** Bundled default plan. Bump `version` whenever this content changes so the
  * copy seeded into localStorage gets refreshed. */
 export const defaultPlan: TrainingPlan = {
-  version: 1,
+  version: 2,
   header,
   philosophy: { sectionLabel: philosophySectionLabel, items: philosophy },
   phaseOverview: { sectionLabel: phaseOverviewSectionLabel, cards: phaseOverview },

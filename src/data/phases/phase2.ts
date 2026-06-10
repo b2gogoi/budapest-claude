@@ -16,7 +16,7 @@ export const phase2: Phase = {
     {
       id: 'w5',
       num: 'W5',
-      dates: '4–9 Aug',
+      startDate: '2026-08-04',
       title: 'Strength Phase Begins · Broken 100s · Speed Endurance',
       accent: 'gold',
       badges: ['~4500m pool', '3 gym'],
@@ -181,7 +181,7 @@ export const phase2: Phase = {
     {
       id: 'w6',
       num: 'W6',
-      dates: '11–16 Aug',
+      startDate: '2026-08-11',
       title: 'Peak Strength Load · Race Simulation 50s · Start Mechanics',
       accent: 'gold',
       badges: ['~4500m pool', '3 gym'],
@@ -349,7 +349,7 @@ export const phase2: Phase = {
     {
       id: 'w7',
       num: 'W7',
-      dates: '18–23 Aug',
+      startDate: '2026-08-18',
       title: '★ KEY — 100 Fly Full TT · Strength→Power Transition',
       accent: 'gold',
       badges: ['~4200m pool', '3 gym'],
@@ -517,7 +517,7 @@ export const phase2: Phase = {
     {
       id: 'w8',
       num: 'W8',
-      dates: '25–30 Aug',
+      startDate: '2026-08-25',
       title: 'Deload · Phase 2 Close · Prepare Sprint Block',
       accent: 'slate',
       badges: ['~2800m pool', '3 gym reduced'],

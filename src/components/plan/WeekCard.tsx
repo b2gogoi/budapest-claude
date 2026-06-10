@@ -4,6 +4,7 @@ import { Badge } from '../ui/Badge';
 import { RichText } from '../ui/RichText';
 import { DayColumn } from './DayColumn';
 import { sessionKey, usePlanState } from '../../state/PlanStateProvider';
+import { formatWeekRange } from '../../utils/dates';
 
 interface WeekCardProps {
   week: Week;
@@ -30,7 +31,9 @@ export function WeekCard({ week }: WeekCardProps) {
         className="flex w-full items-center gap-2.5 border-b border-line bg-surface-2 px-3.5 py-2 text-left select-none"
       >
         <span className="w-7 flex-shrink-0 font-display text-xl leading-none text-faint">{week.num}</span>
-        <span className="flex-shrink-0 font-mono text-[8.5px] text-faint">{week.dates}</span>
+        <span className="flex-shrink-0 font-mono text-[8.5px] text-faint">
+          {formatWeekRange(week.startDate, week.spanDays)}
+        </span>
         <span className={`flex-1 font-condensed text-[12.5px] font-bold tracking-[0.04em] ${accent.text}`}>
           {week.title}
         </span>

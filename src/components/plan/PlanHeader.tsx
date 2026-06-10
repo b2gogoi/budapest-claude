@@ -1,7 +1,6 @@
 import type { PlanHeaderConfig } from '../../types/plan';
 import { ACCENTS } from '../../theme/accents';
 import { Pill } from '../ui/Pill';
-import { ThemeToggle } from '../ui/ThemeToggle';
 
 interface PlanHeaderProps {
   config: PlanHeaderConfig;
@@ -25,13 +24,10 @@ export function PlanHeader({ config }: PlanHeaderProps) {
           </h1>
           <p className="mt-1.5 font-condensed text-[17px] text-muted">{config.subtitle}</p>
         </div>
-        <div className="flex items-start gap-4">
-          <div className="flex flex-col items-end gap-1.5">
-            {config.pills.map((pill) => (
-              <Pill key={pill.label} label={pill.label} tone={pill.tone} />
-            ))}
-          </div>
-          <ThemeToggle />
+        <div className="flex flex-col items-end gap-1.5">
+          {config.pills.map((pill) => (
+            <Pill key={pill.label} label={pill.label} tone={pill.tone} />
+          ))}
         </div>
       </div>
       <div className="mt-[18px] flex flex-wrap gap-6 border-t border-line pt-[18px]">
