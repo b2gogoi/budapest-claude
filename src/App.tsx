@@ -5,6 +5,7 @@ import { Sidebar } from './components/layout/Sidebar';
 import { DashboardPage } from './pages/DashboardPage';
 import { WorkoutsPage } from './pages/WorkoutsPage';
 import { ConfigurePage } from './pages/ConfigurePage';
+import { SettingsPage } from './pages/SettingsPage';
 
 function AppShell() {
   const { route, navigate } = useHashRoute();
@@ -17,6 +18,8 @@ function AppShell() {
             <ConfigurePage />
           ) : route === 'workouts' ? (
             <WorkoutsPage />
+          ) : route === 'settings' ? (
+            <SettingsPage />
           ) : (
             <DashboardPage />
           )}

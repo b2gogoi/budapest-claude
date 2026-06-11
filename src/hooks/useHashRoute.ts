@@ -1,11 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 
-export type Route = 'dashboard' | 'workouts' | 'configure';
+export type Route = 'dashboard' | 'workouts' | 'configure' | 'settings';
 
 function parseHash(): Route {
   const path = window.location.hash.replace(/^#\/?/, '');
   if (path === 'configure') return 'configure';
   if (path === 'workouts') return 'workouts';
+  if (path === 'settings') return 'settings';
   return 'dashboard';
 }
 
