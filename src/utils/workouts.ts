@@ -34,6 +34,35 @@ const ITEM_PATTERN = /^\*\*(.+?):?\*\*\s*(.*)$/;
 /** Leading sets×reps, e.g. "5×5", "3×10", "4×(...)" is excluded. */
 const SETS_REPS_PATTERN = /^(\d+)\s*×\s*(\d+)/;
 
+export interface ParsedExercise {
+  /** Canonical exercise name (aliases applied). */
+  name: string;
+  /** Raw prescription text, e.g. "5×5 @75–80%". */
+  prescription: string;
+  /** Leading sets×reps if parseable, e.g. "5×5". */
+  setsReps?: string;
+  /** Prescription with the sets×reps prefix removed. */
+  note: string;
+}
+
+/** Parse a gym session item line into an exercise, or null for non-exercise
+ * lines (plain text / emphasis-only commentary). */
+export function parseExerciseItem(text: string): ParsedExercise | null {
+  const match = ITEM_PATTERN.exec(text);
+  if (!match) return null;
+  const name = canonicalName(match[1]);
+  const prescription = match[2].trim() || '—';
+  const setsReps = SETS_REPS_PATTERN.exec(prescription);
+  return {
+    name,
+    prescription,
+    setsReps: setsReps ? `${setsReps[1]}×${setsReps[2]}` : undefined,
+    note: setsReps
+      ? prescription.slice(setsReps[0].length).replace(/^[\s—–\-·,]+/, '')
+      : prescription,
+  };
+}
+
 function canonicalName(raw: string): string {
   const cleaned = raw.replace(/\s+/g, ' ').trim().replace(/:$/, '');
   return WORKOUT_ALIASES[cleaned.toLowerCase()] ?? cleaned;
@@ -64,11 +93,10 @@ export function extractWorkouts(plan: TrainingPlan): Workout[] {
         for (const session of day.sessions) {
           if (session.kind !== 'gym') continue;
           for (const item of session.items) {
-            const match = ITEM_PATTERN.exec(item.text);
-            if (!match) continue; // plain/emphasis-only lines are not exercises
+            const exercise = parseExerciseItem(item.text);
+            if (!exercise) continue; // plain/emphasis-only lines are not exercises
 
-            const name = canonicalName(match[1]);
-            const prescription = match[2].trim() || '—';
+            const { name, prescription } = exercise;
             const id = slugify(name);
 
             let workout = workouts.get(id);
@@ -91,13 +119,10 @@ export function extractWorkouts(plan: TrainingPlan): Workout[] {
               (v) => normalizePrescription(v.prescription) === key,
             );
             if (!variation) {
-              const setsReps = SETS_REPS_PATTERN.exec(prescription);
               variation = {
                 prescription,
-                setsReps: setsReps ? `${setsReps[1]}×${setsReps[2]}` : undefined,
-                note: setsReps
-                  ? prescription.slice(setsReps[0].length).replace(/^[\s—–\-·,]+/, '')
-                  : prescription,
+                setsReps: exercise.setsReps,
+                note: exercise.note,
                 occurrences: [],
               };
               workout.variations.push(variation);

@@ -5,6 +5,7 @@ import { Sidebar } from './components/layout/Sidebar';
 import { DashboardPage } from './pages/DashboardPage';
 import { WorkoutsPage } from './pages/WorkoutsPage';
 import { ConfigurePage } from './pages/ConfigurePage';
+import { DatabasePage } from './pages/DatabasePage';
 import { SettingsPage } from './pages/SettingsPage';
 
 function AppShell() {
@@ -18,6 +19,8 @@ function AppShell() {
             <ConfigurePage />
           ) : route === 'workouts' ? (
             <WorkoutsPage />
+          ) : route === 'database' ? (
+            <DatabasePage />
           ) : route === 'settings' ? (
             <SettingsPage />
           ) : (

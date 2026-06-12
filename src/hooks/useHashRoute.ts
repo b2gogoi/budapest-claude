@@ -1,13 +1,12 @@
 import { useCallback, useEffect, useState } from 'react';
 
-export type Route = 'dashboard' | 'workouts' | 'configure' | 'settings';
+export type Route = 'dashboard' | 'workouts' | 'configure' | 'database' | 'settings';
+
+const ROUTES: Route[] = ['dashboard', 'workouts', 'configure', 'database', 'settings'];
 
 function parseHash(): Route {
   const path = window.location.hash.replace(/^#\/?/, '');
-  if (path === 'configure') return 'configure';
-  if (path === 'workouts') return 'workouts';
-  if (path === 'settings') return 'settings';
-  return 'dashboard';
+  return ROUTES.find((r) => r === path) ?? 'dashboard';
 }
 
 /** Minimal hash-based router — '#/' = dashboard, '#/workouts', '#/configure'. */
